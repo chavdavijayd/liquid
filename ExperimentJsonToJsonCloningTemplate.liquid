@@ -1,0 +1,187 @@
+{%- assign expSetupColHeaders = content.spreadsheets[0].tables[0].header | Split: "','" -%}
+{%- assign expSetupColValues = content.spreadsheets[0].tables[0].datarow[0] | Split: "," -%}
+{%- assign CCMCColHeaders = content.spreadsheets[0].tables[5].header | Split: "','" -%}
+{%- assign CCMColHeaders = content.spreadsheets[0].tables[6].header | Split: "','" -%}
+{%- assign poolingColHeaders = content.spreadsheets[0].tables[7].header | Split: "','" -%}
+{%- assign poolingColValues = content.spreadsheets[0].tables[7].datarow[0] | Split: "," -%}
+{
+    "experimentId" : "{{expSetupColValues[6]}}",
+    "experimentType": "",
+    "experimentTitle": "{{content.metaData.title}}",
+    "experimentVerion": "{{content.metaData.experimentIdversionNumber}}",
+    "createdOn": "{{content.metaData.createdOn}}",
+    "objective":  "{{expSetupColValues[7]}}",
+    "conclusion":"",
+    "lastModifiedOn":"",
+    "experimentStatus": "{{content.metaData.experimentStatus}}",
+    "project": {
+        "projectId": "{{expSetupColValues[2]}}",
+        "projectName": ""
+    },
+    "technologyType": "",
+    "technologySubType":"",
+    "protocol": "{{expSetupColValues[8]}}",
+    "methodVersion" : "",
+    "testName": "",
+    "agreementPacketId": "",
+    "effortTrackingProjectId": "",
+    "experimentPersons": [
+        {
+        "personRole": "{{expSetupColHeaders[9]}}",
+        "personName": "{{expSetupColValues[9]}}"
+        }
+    ],
+    "experimentExceptions":[
+        {
+            "name":"",
+            "section":"",
+            "comment":""
+        }
+    ],
+    "experimentRelationships":[
+        {
+            "relatedExperimentId" : "",
+            "name":"",
+            "displayName": ""
+        }
+    ],
+    "numberOfCulturesForCloning": "{{expSetupColValues[11]}}",
+    "cloningDate":"{{expSetupColValues[13]}}",
+    "cloningType":"{{expSetupColValues[14]}}",
+    "numberOfClones":"{{expSetupColValues[12]}}",
+    "experimentStartDate":"{{expSetupColValues[19]}}",
+    "experimentEndDate":"{{expSetupColValues[20]}}",
+    "numberOfPools":"{{poolingColValues[0]}}",
+    "experimentMaterials":[
+        {
+            "materialId": "",
+            "lotId": "",
+            "batchId": "",
+            "containerId": "",
+            "isAdjustmentMaterial": "",
+            "completeMedia":{
+                "completeMediaName":"",
+                "isFiltered":"",
+                "filterMaterialId":"",
+                "comment":"",
+                "preparedBy":"",
+                "purpose":"",
+                "isFrozenOrThawed":"",
+                "preparationDate":"",
+                "completeMediaComponent":[
+                    {
+                        "componentAmount":"",
+                        "componentAmountUnitOfMeasure":"",
+                        "componentMaterialId":""
+                    }
+                ]
+            }
+        }
+    ],
+    "RAWSECTION - Complete Cloning Medium" : "++++++++++++++++++++++++",
+    "Complete Cloning Mediums":[
+        {%- for CCMrowValue in content.spreadsheets[0].tables[6].datarow -%}
+            {%- assign currentrowindex = forloop.index | Minus: 1 -%}
+            {%- if forloop.Last == true -%}
+                {
+                    {%- assign CCMColValues = CCMrowValue | Split: "," -%}
+                    {%- for CCMColValue in CCMColValues -%}
+                        {%- assign currentcolindex = forloop.index | Minus: 1 -%}
+                        {%- if forloop.Last == true -%}
+                            "{{CCMColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMColValues[currentcolindex] | Remove: "'"}}"
+                        {%- else -%}
+                            "{{CCMColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMColValues[currentcolindex] | Remove: "'"}}",
+                        {%- endif -%}
+                    {%- endfor -%}
+                }
+            {%- else -%}
+                {
+                    {%- assign CCMColValues = CCMrowValue | Split: "," -%}
+                    {%- for CCMColValue in CCMColValues -%}
+                        {%- assign currentcolindex = forloop.index | Minus: 1 -%}
+                        {%- if forloop.Last == true -%}
+                            "{{CCMColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMColValues[currentcolindex] | Remove: "'"}}"
+                        {%- else -%}
+                            "{{CCMColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMColValues[currentcolindex] | Remove: "'"}}",
+                        {%- endif -%}
+                    {%- endfor -%}
+                },
+            {%- endif -%}
+        {%- endfor -%}
+    ],
+    "RAWSECTION - Complete Cloning Medium Components" : "++++++++++++++++++++++++",
+    "Complete Cloning Medium Components":[
+        {%- for CCMCrowValue in content.spreadsheets[0].tables[5].datarow -%}
+            {%- assign currentrowindex = forloop.index | Minus: 1 -%}
+            {%- if forloop.Last == true -%}
+                {
+                    {%- assign CCMCColValues = CCMCrowValue | Split: "," -%}
+                    {%- for CCMCColValue in CCMCColValues -%}
+                        {%- assign currentcolindex = forloop.index | Minus: 1 -%}
+                        {%- if forloop.Last == true -%}
+                            "{{CCMCColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMCColValues[currentcolindex] | Remove: "'"}}"
+                        {%- else -%}
+                            "{{CCMCColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMCColValues[currentcolindex] | Remove: "'"}}",
+                        {%- endif -%}
+                    {%- endfor -%}
+                }
+            {%- else -%}
+                {
+                    {%- assign CCMCColValues = CCMCrowValue | Split: "," -%}
+                    {%- for CCMCColValue in CCMCColValues -%}
+                        {%- assign currentcolindex = forloop.index | Minus: 1 -%}
+                        {%- if forloop.Last == true -%}
+                            "{{CCMCColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMCColValues[currentcolindex] | Remove: "'"}}"
+                        {%- else -%}
+                            "{{CCMCColHeaders[currentcolindex] | Remove: "'"}}":"{{CCMCColValues[currentcolindex] | Remove: "'"}}",
+                        {%- endif -%}
+                    {%- endfor -%}
+                },
+            {%- endif -%}
+        {%- endfor -%}
+    ],
+    {%- for expSetupColHeader in expSetupColHeaders -%}
+        {%- assign currentindex = forloop.index | Minus: 1 -%}
+         
+     {%- endfor -%}
+    "RAWSECTION - Experiment SetUp" : "++++++++++++++++++++++++",
+    {%- for expSetupColHeader in expSetupColHeaders -%}
+        {%- assign currentindex = forloop.index | Minus: 1 -%}
+         {%- if forloop.Last == true -%}
+         "{{expSetupColHeader | Remove: "'"}}":"{{expSetupColValues[currentindex] | Remove: "'"}}"
+         {%- else -%}
+         "{{expSetupColHeader | Remove: "'"}}":"{{expSetupColValues[currentindex] | Remove: "'"}}",
+         {%- endif -%}
+     {%- endfor -%}
+}
+
+{% comment %} {%- assign deviceList = content.devices | Split: ', ' -%}
+{
+
+   "fullName": "{{content.firstName | Append: ' ' | Append: content.lastName}}",
+   "firstNameUpperCase": "{{content.firstName | Upcase}}",
+   "phoneAreaCode": "{{content.phone | Slice: 1, 3}}",
+   "devices" : [
+      {%- for device in deviceList -%}
+         {%- if forloop.Last == true -%}
+         "{{device}}"
+         {%- else -%}
+         "{{device}}",
+         {%- endif -%}
+     {%- endfor -%}
+   ],
+   {%- for vjrow in content.datarows -%}
+        "row{{forloop.index}}": {
+        {%- assign columnvalues = vjrow | Split: ', ' -%}
+        {%- for vjcol in columnvalues -%}
+          "col{{forloop.index}}": "{{vjcol}}"
+          {%- if forloop.last == false -%}
+              ,
+          {%- endif -%}
+        {%- endfor -%}
+        }
+        {%- if forloop.last == false -%}
+              ,
+        {%- endif -%}
+   {%- endfor -%}
+} {% endcomment %}
