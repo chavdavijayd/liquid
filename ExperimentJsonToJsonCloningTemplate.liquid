@@ -53,30 +53,40 @@
     "experimentEndDate":"{{expSetupColValues[20]}}",
     "numberOfPools":"{{poolingColValues[0]}}",
     "experimentMaterials":[
+        {%- for CCMrowValue in content.spreadsheets[0].tables[6].datarow -%}
+        {%- assign currentrowindex = forloop.index | Minus: 1 -%}
+        {%- if forloop.Last == true -%}
         {
+            {%- assign CCMColValues = CCMrowValue | Split: "," -%}
             "materialId": "",
             "lotId": "",
             "batchId": "",
             "containerId": "",
             "isAdjustmentMaterial": "",
-            "completeMedia":{
-                "completeMediaName":"",
-                "isFiltered":"",
-                "filterMaterialId":"",
-                "comment":"",
-                "preparedBy":"",
-                "purpose":"",
-                "isFrozenOrThawed":"",
-                "preparationDate":"",
-                "completeMediaComponent":[
-                    {
-                        "componentAmount":"",
-                        "componentAmountUnitOfMeasure":"",
-                        "componentMaterialId":""
-                    }
-                ]
-            }
+                "completeMedia":{
+                    "completeMediaName":{{CCMColValues[10]}},
+                    "isFiltered":{{CCMColValues[6]}},
+                    "filterdetails":{{CCMColValues[7]}},
+                    "filterMaterialId":"",
+                    "comment":{{CCMColValues[8]}},
+                    "preparedBy":{{CCMColValues[9]}},
+                    "purpose":{{CCMColValues[2]}},
+                    "isFrozenOrThawed":{{CCMColValues[3]}},
+                    "preparationDate":{{CCMColValues[4]}},
+                    "totalVolume(ml)":{{CCMColValues[5]}},
+                    "completeMediaComponent":[
+                        {
+                            "componentAmount":"",
+                            "componentAmountUnitOfMeasure":"",
+                            "componentMaterialId":""
+                        }
+                    ]
+                }
+            {%- endfor -%}
         }
+        {%- else -%}
+        {%- endif -%}
+        {%- endfor -%}
     ],
     "RAWSECTION - Complete Cloning Medium" : "++++++++++++++++++++++++",
     "Complete Cloning Mediums":[
